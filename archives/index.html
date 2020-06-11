@@ -86,10 +86,66 @@
 					<a class="mail" target="_blank" href="mailto:1581954140@qq.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
+
+
+
 		</nav>
 	</header>		
 </div>
+<!-- 《左侧边栏添加--APlayer音乐播放器 -->
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+<!-- // 这里div的样式是笔者自己修改过的，你可以直接使用APlayer官方的原配置：<div id="aplayer"></div> -->
+<div id="aplayer" style="position:absolute;left;0;bottom:0;"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/color-thief-don@2.0.2/src/color-thief.js"></script>
+<script>
+    const ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        autoplay: false,
+        listFolded: true,
+        listMaxHeight: 90,
+        order: 'list',
+        loop: 'all',
+        theme: '#b7daff',
+        preload: 'none',
+        mutex: true,
+        lrcType: 3,
+        volume: 0.7,
+        fixed: true,
+        audio: [{
+                name: '花火が瞬く夜に',
+                artist: '羽肿',
+                lrc: '',
+                cover: '',
+                url: 'http://audio.xmcdn.com/group39/M02/9E/27/wKgJn1p8V9OQYTecACESMlKTFsw671.mp3'
+            },
+            {
+                name: 'Astral Requiem',
+                artist: '山下直人',
+                lrc: '',
+                cover: '',
+                url: 'http://audio.xmcdn.com/group35/M0B/04/C5/wKgJnVoSKomgXpXHAEKbX-Ko0CY304.mp3'
+            }
+        ]
+    });
+
+    <!-- 根据封面自适应主题色 -->
+    const colorThief = new ColorThief();
+    const setTheme = (index) => {
+        if (!ap.list.audios[index].theme) {
+            colorThief.getColorAsync(ap.list.audios[index].cover, function(color) {
+                ap.theme(`rgb(${color[0]}, ${color[1]}, ${color[2]})`, index);
+            });
+        }
+    };
+    setTheme(ap.list.index);
+    ap.on('listswitch', (data) => {
+        setTheme(data.index);
+    });
+</script>
+
+<!-- 左侧边栏添加--APlayer音乐播放器》 -->
     </div>
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
       
